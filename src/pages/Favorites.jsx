@@ -41,11 +41,11 @@ export default function Favorites({
           <p className="text-purple-200">Your collection of beloved quotes</p>
         </div>
 
-        <SearchBar
+        {/* <SearchBar
           value={searchQuery}
           onChange={setSearchQuery}
           placeholder="Search your favorites..."
-        />
+        /> */}
 
         <>
           <div className="text-white text-sm font-medium px-2">

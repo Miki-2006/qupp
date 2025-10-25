@@ -64,11 +64,11 @@ export default function Quotes({
           <p className="text-purple-200">Discover wisdom from great minds</p>
         </div>
 
-        <SearchBar
+        {/* <SearchBar
           value={searchQuery}
           onChange={setSearchQuery}
           placeholder="Search by text or author..."
-        />
+        /> */}
 
         <CategoryFilter
           selected={selectedCategory}

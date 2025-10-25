@@ -7,10 +7,12 @@ import Button from "../components/ui/Button";
 import QuoteCard from "../components/quotes/QuoteCard";
 import SearchBar from "../components/quotes/SearchBar";
 import fetchDailyQuote from "../storage/fetchDailyQuote";
+import fetchDailyQuoteVideo from "../storage/fetchDailyQuoteVideo";
 
 export default function Home({favoriteQuotes, setFavoriteQuotes, handleToggleFavorite}) {
   const navigate = useNavigate();
   const [dailyQuote, setDailyQuote] = useState(null);
+  const [dailyQuoteVideo, setDailyQuoteVideo] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -21,7 +23,15 @@ export default function Home({favoriteQuotes, setFavoriteQuotes, handleToggleFav
       }
     };
 
+    const getDailyQuoteVideo = async () => {
+      const data = await fetchDailyQuoteVideo();
+      if (data) {
+        setDailyQuoteVideo(data);        
+      }
+    };
+
     getDailyQuote();
+    getDailyQuoteVideo();
   }, []);
 
   const handleSearch = useCallback(() => {
@@ -38,6 +48,11 @@ export default function Home({favoriteQuotes, setFavoriteQuotes, handleToggleFav
     }
   }, [searchQuery, handleSearch]);
 
+  function convertToEmbedUrl(url) {
+  const match = url.match(/(?:shorts\/|watch\?v=)([a-zA-Z0-9_-]{11})/);
+  return match ? `https://www.youtube.com/embed/${match[1]}` : '';
+}
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 pb-24">
       <div className="max-w-2xl mx-auto px-4 pt-6 space-y-6">
@@ -48,11 +63,11 @@ export default function Home({favoriteQuotes, setFavoriteQuotes, handleToggleFav
           <p className="text-purple-200">Your dose of wisdom for today</p>
         </div>
 
-        <SearchBar
+        {/* <SearchBar
           value={searchQuery}
           onChange={setSearchQuery}
           placeholder="Search for inspiration..."
-        />
+        /> */}
 
         <Card className="bg-gradient-to-br from-amber-400 to-orange-500 border-none shadow-2xl rounded-3xl p-8 text-white">
           <div className="flex items-center gap-2 mb-4">
@@ -80,7 +95,7 @@ export default function Home({favoriteQuotes, setFavoriteQuotes, handleToggleFav
             <div className="flex items-center gap-3 text-white">
               <Youtube className="w-8 h-8" />
               <div>
-                <h2 className="text-xl font-bold">Motivational Video</h2>
+                <h2 className="text-xl font-bold">Quote Video</h2>
                 <p className="text-sm text-red-100">Watch and get inspired</p>
               </div>
             </div>
@@ -89,7 +104,7 @@ export default function Home({favoriteQuotes, setFavoriteQuotes, handleToggleFav
           <div className="relative pb-[56.25%] bg-black">
             <iframe
               className="absolute top-0 left-0 w-full h-full"
-              src="https://www.youtube.com/embed/ZXsQAXx_ao0"
+              src={dailyQuoteVideo ? convertToEmbedUrl(dailyQuoteVideo.videoUrl) : convertToEmbedUrl("https://www.youtube.com/shorts/Ir04S9zh_v0")}
               title="Motivational Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -7,6 +7,7 @@ import Quotes from "./pages/Quotes";
 import Favorites from "./pages/Favorites";
 import fetchFavorites from "./localstorage/fetchFavorites";
 import updateQuote from "./localstorage/pushQuote";
+import AdminPanel from "./pages/AdminPanel";
 
 function App() {
   const [favoriteQuotes, setFavoriteQuotes] = useState(null);
@@ -54,6 +55,7 @@ function App() {
           <Route path="/home" element={<Home favoriteQuotes={favoriteQuotes} setFavoriteQuotes={setFavoriteQuotes} handleToggleFavorite={handleToggleFavorite} />}  />
           <Route path="/quotes" element={<Quotes favoriteQuotes={favoriteQuotes} setFavoriteQuotes={setFavoriteQuotes} handleToggleFavorite={handleToggleFavorite} />}  />
           <Route path="/favorites" element={<Favorites favoriteQuotes={favoriteQuotes} setFavoriteQuotes={setFavoriteQuotes} handleToggleFavorite={handleToggleFavorite} />} />
+          <Route path="/admin/QU-company/qupp-product/founder/Miki-2006" element={<AdminPanel />} />
         </Routes>
       </Layout>
     </Router>

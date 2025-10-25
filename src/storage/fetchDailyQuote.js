@@ -1,9 +1,9 @@
-import { collection, doc, getDoc, getDocs } from "firebase/firestore/lite";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import db from "./firebaseConfig";
 
 const fetchDailyQuote = async () => {
     try {
-        const dailyQuoteCol = collection(db, 'dailyQuote')
+        const dailyQuoteCol = collection(db, 'dailyQuote');
         const dailyQuotesSnapshot = await getDocs(dailyQuoteCol)
         const [quoteId] = dailyQuotesSnapshot.docs.map(doc => doc.data())
 
