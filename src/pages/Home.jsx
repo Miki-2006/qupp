@@ -115,13 +115,13 @@ export default function Home({favoriteQuotes, setFavoriteQuotes, handleToggleFav
 
         <div className="text-center py-8">
           <p className="text-purple-200 text-sm mb-4">
-            Want to explore more quotes?
+            Want to get quote test your personality?
           </p>
           <Button
-            onClick={() => navigate(createPageUrl("Quotes"))}
+            onClick={() => navigate(createPageUrl("Quiz"))}
             className="text-violet-700 hover:bg-gray-100 rounded-full px-8 py-6 text-lg font-semibold shadow-xl"
           >
-            Browse All Quotes →
+            Test your personality
           </Button>
         </div>
       </div>

@@ -53,6 +53,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={<Home favoriteQuotes={favoriteQuotes} setFavoriteQuotes={setFavoriteQuotes} handleToggleFavorite={handleToggleFavorite} />}  />
+          <Route path="/quiz" element={<Quiz />} />
           <Route path="/quotes" element={<Quotes favoriteQuotes={favoriteQuotes} setFavoriteQuotes={setFavoriteQuotes} handleToggleFavorite={handleToggleFavorite} />}  />
           <Route path="/favorites" element={<Favorites favoriteQuotes={favoriteQuotes} setFavoriteQuotes={setFavoriteQuotes} handleToggleFavorite={handleToggleFavorite} />} />
           <Route path="/admin/QU-company/qupp-product/founder/Miki-2006" element={<AdminPanel />} />
