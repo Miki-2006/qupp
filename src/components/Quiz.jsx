@@ -2,6 +2,8 @@
 import React, { useState, useRef } from 'react';
 import html2canvas from 'html2canvas';
 
+const API_BASE_URL = (process.env.REACT_APP_API_BASE_URL || '').replace(/\/$/, '');
+
 // Вопросы теста
 const questions = [
   {
@@ -106,8 +108,9 @@ export default function Quiz() {
   const sendAnswersToAI = async (answers) => {
     setLoading(true);
     setCurrentStep(2);
+    setError('');
     try {
-      const response = await fetch('/api/analyze', {
+      const response = await fetch(`${API_BASE_URL}/api/analyze`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -115,15 +118,31 @@ export default function Quiz() {
         body: JSON.stringify({ answers }),
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setResult(data);
-      } else {
-        setError(data.error || 'Произошла ошибка при анализе ответов.');
+      const raw = await response.text();
+      let data = null;
+      try {
+        data = raw ? JSON.parse(raw) : null;
+      } catch {
+        data = null;
       }
+
+      if (!response.ok) {
+        if (data?.error) {
+          throw new Error(data.error);
+        }
+        if (response.status === 404) {
+          throw new Error('Эндпоинт /api/analyze не найден. Для локальной проверки запустите проект через `vercel dev` или укажите `REACT_APP_API_BASE_URL`.');
+        }
+        throw new Error(`Сервер вернул ошибку ${response.status}.`);
+      }
+
+      if (!data?.quote || !data?.author) {
+        throw new Error('Сервер вернул ответ в неожиданном формате.');
+      }
+
+      setResult(data);
     } catch (err) {
-      setError('Не удалось связаться с сервером. Проверьте интернет-соединение.');
+      setError(err?.message || 'Не удалось связаться с сервером. Проверьте интернет-соединение.');
     } finally {
       setLoading(false);
     }

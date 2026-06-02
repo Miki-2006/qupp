@@ -118,7 +118,7 @@ export default function Home({favoriteQuotes, setFavoriteQuotes, handleToggleFav
             Want to get quote test your personality?
           </p>
           <Button
-            onClick={() => navigate(createPageUrl("Quiz"))}
+            onClick={() => navigate("/quiz")}
             className="text-violet-700 hover:bg-gray-100 rounded-full px-8 py-6 text-lg font-semibold shadow-xl"
           >
             Test your personality

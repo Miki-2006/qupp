@@ -4,6 +4,7 @@ import Layout from "./Layout";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Quotes from "./pages/Quotes";
+import Quiz from "./components/Quiz"
 import Favorites from "./pages/Favorites";
 import fetchFavorites from "./localstorage/fetchFavorites";
 import updateQuote from "./localstorage/pushQuote";
