@@ -5,7 +5,6 @@ import db from "../storage/firebaseConfig";
 export default function AdminPanel() {
   const [quotes, setQuotes] = useState([]);
   const [selectedQuoteId, setSelectedQuoteId] = useState("");
-  const [videoUrl, setVideoUrl] = useState("");
   const [status, setStatus] = useState("");
 
   useEffect(() => {
@@ -28,12 +27,7 @@ export default function AdminPanel() {
       quote_id: selectedQuote.id,
     };
 
-    const quoteVideoOfTheDay = {
-      videoUrl: videoUrl,
-    };
-
     await setDoc(doc(db, "dailyQuote", "A0ra9K9mT1COqJjJfnPf"), quoteOfTheDay);
-    await setDoc(doc(db, "dailyQuoteVideo", "SprPZPkraVLrgJj3kIZz"), quoteVideoOfTheDay);
     setStatus("Цитата дня обновлена!");
 
     setTimeout(function () {
@@ -42,11 +36,14 @@ export default function AdminPanel() {
   };
 
   return (
-    <div style={{ padding: "2rem", maxWidth: "600px", margin: "auto" }}>
-      <h2>Админка: Цитата дня</h2>
+    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-100 pb-24">
+      <div className="max-w-2xl mx-auto px-4 pt-6">
+      <div className="rounded-3xl bg-white/90 border border-brand-100 shadow-xl shadow-brand-200/40 p-6">
+      <h2 className="text-2xl font-bold text-brand-900 mb-6">Админка: Цитата дня</h2>
 
-      <label>Выберите цитату:</label>
+      <label className="text-sm font-semibold text-brand-800">Выберите цитату:</label>
       <select
+        className="mt-2 w-full rounded-xl border border-brand-200 px-4 py-3 bg-white text-slate-800 outline-none focus:ring-2 focus:ring-brand-200"
         value={selectedQuoteId}
         onChange={(e) => setSelectedQuoteId(e.target.value)}
       >
@@ -60,19 +57,15 @@ export default function AdminPanel() {
 
       <br />
       <br />
-      <label>Ссылка на видео:</label>
-      <input
-        type="text"
-        value={videoUrl}
-        onChange={(e) => setVideoUrl(e.target.value)}
-        placeholder="https://youtube.com/..."
-        style={{ width: "100%" }}
-      />
-
-      <br />
-      <br />
-      <button onClick={handleSubmit}>Обновить цитату дня</button>
-      <p>{status}</p>
+      <button
+        className="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-brand-500 via-brand-700 to-accent-500 hover:brightness-105 transition shadow-lg shadow-brand-200/60"
+        onClick={handleSubmit}
+      >
+        Обновить цитату дня
+      </button>
+      <p className="mt-4 text-sm text-brand-700 font-medium">{status}</p>
+      </div>
+      </div>
     </div>
   );
 }

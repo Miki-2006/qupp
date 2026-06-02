@@ -7,11 +7,13 @@ const Button = ({
   ...props
 }) => {
   const base =
-    "inline-flex items-center justify-center font-medium transition-colors focus:outline-none";
+    "inline-flex items-center justify-center font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 disabled:opacity-60 disabled:cursor-not-allowed";
 
   const variants = {
-    solid: "bg-purple-600 text-white hover:bg-purple-700",
-    ghost: "bg-transparent text-purple-600 hover:bg-purple-100",
+    solid: "bg-gradient-to-r from-brand-500 via-brand-700 to-accent-500 text-white shadow-lg shadow-brand-200/60 hover:brightness-105",
+    default: "bg-gradient-to-r from-brand-500 via-brand-700 to-accent-500 text-white shadow-lg shadow-brand-200/60 hover:brightness-105",
+    ghost: "bg-transparent text-brand-700 hover:bg-brand-100/80",
+    outline: "border border-brand-300 text-brand-800 bg-white/80 hover:bg-brand-50",
   };
 
   const sizes = {
@@ -22,7 +24,7 @@ const Button = ({
   return (
     <button
       onClick={onClick}
-      className={`${base} ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`${base} ${variants[variant] || variants.solid} ${sizes[size] || sizes.md} ${className}`}
       {...props}
     >
       {children}

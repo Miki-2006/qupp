@@ -1,8 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
-import SearchBar from "../components/quotes/SearchBar";
+import { useState, useEffect } from "react";
 import QuoteCard from "../components/quotes/QuoteCard";
 import CategoryFilter from "../components/quotes/CategoryFilter";
-import { Loader2 } from "lucide-react";
 import fetchQuotes from "../storage/fetchQuotes";
 
 export default function Quotes({
@@ -12,8 +10,7 @@ export default function Quotes({
 }) {
   const [quotes, setQuotes] = useState(null);
   const [filteredQuotes, setFilteredQuotes] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("motivation");
 
   useEffect(() => {
     const getQuotes = async () => {
@@ -23,60 +20,28 @@ export default function Quotes({
     getQuotes();
   }, []);
 
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const searchParam = urlParams.get('search');
-  //   if (searchParam) {
-  //     setSearchQuery(searchParam);
-  //   }
-  //   loadUser();
-  //   loadQuotes();
-  // }, [loadUser, loadQuotes]);
-
   useEffect(() => {
   const filterQuotes = () => {
     let filtered = quotes;
 
-    if (selectedCategory !== "all") {
-      filtered = filtered.filter(q => q.category === selectedCategory);
-    }
-
-    const query = searchQuery.trim().toLowerCase();
-    if (query) {
-      filtered = filtered.filter(
-        q =>
-          q.text.toLowerCase().includes(query) ||
-          q.author.toLowerCase().includes(query)
-      );
-    }
+    filtered = filtered?.filter(q => q.category === selectedCategory);
 
     setFilteredQuotes(filtered);
   };
 
   filterQuotes();
-}, [quotes, searchQuery, selectedCategory]);
+}, [quotes, selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 pb-24">
+    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-100 pb-24">
       <div className="max-w-2xl mx-auto px-4 pt-6 space-y-6">
-        <div className="text-center mb-6">
-          <h1 className="text-4xl font-bold text-white mb-2">Explore Quotes</h1>
-          <p className="text-purple-200">Discover wisdom from great minds</p>
-        </div>
-
-        {/* <SearchBar
-          value={searchQuery}
-          onChange={setSearchQuery}
-          placeholder="Search by text or author..."
-        /> */}
-
         <CategoryFilter
           selected={selectedCategory}
           onSelect={setSelectedCategory}
         />
 
         <>
-          <div className="text-white text-sm font-medium px-2">
+          <div className="text-brand-800 text-sm font-semibold px-2">
             {filteredQuotes?.length}{" "}
             {filteredQuotes?.length === 1 ? "quote" : "quotes"} found
           </div>
@@ -94,8 +59,8 @@ export default function Quotes({
 
           {filteredQuotes?.length === 0 && (
             <div className="text-center py-20">
-              <p className="text-white text-lg">No quotes found</p>
-              <p className="text-purple-200 text-sm mt-2">
+              <p className="text-brand-900 text-lg">No quotes found</p>
+              <p className="text-brand-700 text-sm mt-2">
                 Try adjusting your filters
               </p>
             </div>

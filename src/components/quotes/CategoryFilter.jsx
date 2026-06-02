@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import Button from "../ui/Button";
 
 const categories = [
-  { value: "all", label: "All", emoji: "✨" },
   { value: "motivation", label: "Motivation", emoji: "💪" },
   { value: "love", label: "Love", emoji: "❤️" },
   { value: "success", label: "Success", emoji: "🎯" },
@@ -23,8 +22,8 @@ export default function CategoryFilter({ selected, onSelect }) {
             onClick={() => onSelect(category.value)}
             className={`rounded-full px-4 whitespace-nowrap ${
               selected === category.value
-                ? "bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg"
-                : "bg-white/20 border-white/30 text-white hover:bg-white/30"
+                ? "text-white shadow-lg shadow-brand-200/50"
+                : "bg-white/80 text-brand-800 hover:bg-brand-50"
             }`}
           >
             <span className="mr-2">{category.emoji}</span>
