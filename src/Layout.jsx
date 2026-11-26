@@ -1,9 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "./utils";
-import { Home, BookOpen, Heart } from "lucide-react";
+import { Home, BookOpen, Heart, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
 
-export default function Layout({ children }) {
+export default function Layout({ children, user, onLogin, onLogout }) {
   const location = useLocation();
 
   const navItems = [
@@ -25,9 +25,28 @@ export default function Layout({ children }) {
               className="h-[6.75rem] w-auto object-contain"
             />
           </Link>
-          <button className="px-4 py-1.5 text-sm font-semibold rounded-full border border-brand-200 text-brand-800 bg-white hover:bg-brand-50 transition">
-            Вход
-          </button>
+          {user ? (
+            <div className="flex items-center gap-2">
+              <span className="max-w-[9rem] truncate text-sm font-semibold text-brand-900">
+                {user.displayName || "Google аккаунт"}
+              </span>
+              <button
+                onClick={onLogout}
+                className="p-2 rounded-full border border-brand-200 text-brand-800 bg-white hover:bg-brand-50 transition"
+                aria-label="Выйти"
+                title="Выйти"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={onLogin}
+              className="px-4 py-1.5 text-sm font-semibold rounded-full border border-brand-200 text-brand-800 bg-white hover:bg-brand-50 transition"
+            >
+              Вход через Google
+            </button>
+          )}
         </div>
       </header>
 
